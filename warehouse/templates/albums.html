@@ -1,0 +1,51 @@
+<table>
+    <thead>
+        <tr>
+            <th>
+                Artist ID
+            </th>
+            <th>
+                Album Title
+            </th>
+            <th>
+                Critic Score
+            </th>
+            <th>
+                User Score
+            </th>
+            <th>
+                Release Date
+            </th>
+            <th>
+                Spotify Link
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for album in albums %}
+        <tr>
+            <td>
+                <a href="{% url 'artist' album.artist_id.artist_id %}">{{ album.artist_id.artist_id }}</a>
+            </td>
+            <td>
+                {{ album.title }}
+            </td>
+            <td>
+                {% if album.critic_score %} {{ album.critic_score }} {% endif %}
+            </td>
+            <td>
+                {% if album.user_score %} {{ album.user_score }} {% endif %}
+            </td>
+            <td>
+                {{ album.release_date }}
+            </td>
+            <td>
+                {% if album.spotify_link %} <a href="{{ album.spotify_link }}">{{ album.title }}</a> {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+</table>
