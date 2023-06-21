@@ -1,21 +1,47 @@
 from django.db import models
 
-# Create your models here.
+
+class AOTYAlbumPage(models.Model):
+    class Meta:
+        verbose_name = "AOTY Album Page"
+    id = models.BigIntegerField(primary_key=True)
+    url = models.URLField(max_length=2000)
+    page = models.TextField()
+
+    def __str__(self):
+        return self.url
+
 
 class AOTYArtist(models.Model):
     class Meta:
-        verbose_name = "Album of the Year artist"
+        verbose_name = "AOTY Artist"
     id = models.BigIntegerField(primary_key=True)
-    url = models.URLField()
+    name = models.CharField(max_length=2000)
+
+    def __str__(self):
+        return self.name
+
+
+class AOTYGenre(models.Model):
+    class Meta:
+        verbose_name = "AOTY Genre"
+    id = models.BigIntegerField(primary_key=True)
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
 
 class AOTYAlbum(models.Model):
     class Meta:
-        verbose_name = "Album of the Year album"
+        verbose_name = "AOTY Album"
     id = models.BigIntegerField(primary_key=True)
-    artist = models.ForeignKey(AOTYArtist, on_delete=models.CASCADE)
-    url = models.URLField()
+    page = models.ForeignKey(AOTYAlbumPage, on_delete=models.SET_NULL, null=True, blank=True)
 
-    title = models.CharField(max_length=255)
+    artists = models.ManyToManyField(AOTYArtist, related_name='albums')
+    genres = models.ManyToManyField(AOTYGenre, related_name='albums', blank=True)
+
+    title = models.CharField(max_length=2000)
     
     critic_score = models.IntegerField(blank=True, null=True)
     user_score = models.IntegerField(blank=True, null=True)
@@ -23,14 +49,18 @@ class AOTYAlbum(models.Model):
     release_date = models.DateField(blank=True, null=True)
     
     spotify_link = models.URLField(blank=True, null=True)
-    
-    label = models.CharField(max_length=64, blank=True, null=True)
-    genres = models.TextField(blank=True, null=True)
-    tags = models.TextField(blank=True, null=True)
+
+    @property
+    def num_ratings(self):
+        return AOTYAlbumRating.objects.filter(album=self.id).count()
+
+    def __str__(self):
+        return self.title
+
 
 class AOTYAlbumRating(models.Model):
     class Meta:
-        verbose_name = "Album of the Year album rating"
+        verbose_name = "AOTY Album Rating"
     id = models.CharField(max_length=32, primary_key=True)
     album = models.ForeignKey(AOTYAlbum, on_delete=models.CASCADE)
     date = models.DateTimeField(blank=True, null=True)
