@@ -10,7 +10,7 @@ class Job(DailyJob):
     help = "Pulls albums from AOTY"
 
     def execute(self):
-        return
+        
         last_album_page_id = AOTYAlbumPage.objects.last().id
         for album_page_id in tqdm.tqdm(range(0, last_album_page_id + 1)):
             try:

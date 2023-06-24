@@ -2,7 +2,7 @@ import multiprocessing
 import tqdm
 
 from django_extensions.management.jobs import DailyJob
-from warehouse.models import  AOTYAlbumRating, AOTYAlbumPage, AOTYAlbum
+from warehouse.models import  AOTYAlbumRating, AOTYAlbum
 from warehouse.utils import get_reviews
 
 class Job(DailyJob):

@@ -1,7 +1,7 @@
 from django.urls import path
-from warehouse.views import albums, artist
+from warehouse.views import home, artist
 
 urlpatterns = [
-    path('albums/', albums, name='albums'),
+    path('', home, name='home'),
     path('artist/<int:id>', artist, name='artist'),
 ]

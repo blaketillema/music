@@ -11,8 +11,7 @@ class Job(DailyJob):
     help = "Pulls albums from AOTY"
 
     def execute(self):
-        return
-        N = 700_000
+        N = 700_000 # roughly last album id as of now
         M = AOTYAlbumPage.objects.last().id
 
         block_size = 32

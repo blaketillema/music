@@ -50,10 +50,6 @@ class AOTYAlbum(models.Model):
     
     spotify_link = models.URLField(blank=True, null=True)
 
-    @property
-    def num_ratings(self):
-        return AOTYAlbumRating.objects.filter(album=self.id).count()
-
     def __str__(self):
         return self.title
 
@@ -62,6 +58,6 @@ class AOTYAlbumRating(models.Model):
     class Meta:
         verbose_name = "AOTY Album Rating"
     id = models.CharField(max_length=32, primary_key=True)
-    album = models.ForeignKey(AOTYAlbum, on_delete=models.CASCADE)
+    album = models.ForeignKey(AOTYAlbum, on_delete=models.CASCADE, related_name='ratings')
     date = models.DateTimeField(blank=True, null=True)
     rating = models.IntegerField(blank=True, null=True)

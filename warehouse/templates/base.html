@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}{% endblock %} - Music Warehouse</title>
+    </head>
+    <body>
+        <header>
+            <a href="{% url 'home' %}">Home</a>
+        </header>
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

@@ -1,9 +1,11 @@
 <table>
     <thead>
         <tr>
+            {% if show_artist %}
             <th>
                 Artist ID
             </th>
+            {% endif %}
             <th>
                 Album Title
             </th>
@@ -24,9 +26,13 @@
     <tbody>
         {% for album in albums %}
         <tr>
+            {% if show_artist %}
             <td>
-                <a href="{% url 'artist' album.artist_id.artist_id %}">{{ album.artist_id.artist_id }}</a>
+                {% for artist in album.artists.all %}
+                <a href="{% url 'artist' artist.id %}">{{ artist.name }}</a>
+                {% endfor %}
             </td>
+            {% endif %}
             <td>
                 {{ album.title }}
             </td>
@@ -37,7 +43,7 @@
                 {% if album.user_score %} {{ album.user_score }} {% endif %}
             </td>
             <td>
-                {{ album.release_date }}
+                {% if album.release_date %} {{ album.release_date }} {% endif %}
             </td>
             <td>
                 {% if album.spotify_link %} <a href="{{ album.spotify_link }}">{{ album.title }}</a> {% endif %}
